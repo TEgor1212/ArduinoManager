@@ -859,6 +859,10 @@ func (r *minSizeObjectRenderer) Layout(size fyne.Size) {
 	r.object.child.Resize(size)
 }
 
+func (r *minSizeObjectRenderer) MinSize(max fyne.Size) fyne.Size {
+	return fyne.NewSize(0, 0)
+}
+
 func (r *minSizeObjectRenderer) Objects() []fyne.CanvasObject {
 	return []fyne.CanvasObject{r.object.child}
 }
