@@ -266,10 +266,6 @@ func (m *Manager) ghGet(path string, out any) error {
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func isAlphaNum(b byte) bool {
-	return b >= 'a' && b <= 'z' || b >= '0' && b <= '9'
-}
-
 func (m *Manager) searchGitHub(query string, board bool, creator string, minStars int, sortBy, order string, limit int) ([]SearchItem, error) {
 	q := url.QueryEscape(query)
 	base := "arduino+"
