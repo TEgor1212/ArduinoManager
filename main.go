@@ -529,39 +529,6 @@ func (m *Manager) installLibraryTag(repo *Repo, tag string) error {
 	return m.installGit(repo.CloneURL, filepath.Join(m.Config.LibDir(), repo.Name), tag, false)
 }
 
-func guessBoardNames(fullName string) (string, string) {
-	known := map[string][2]string{
-		"esp8266/Arduino":                    {"esp8266", "esp8266"},
-		"espressif/arduino-esp32":            {"espressif", "esp32"},
-		"espressif/esp32":                    {"espressif", "esp32"},
-		"adafruit/Adafruit_nRF52_Arduino":    {"adafruit", "nrf52"},
-		"arduino/ArduinoCore-avr":            {"arduino", "avr"},
-		"arduino/ArduinoCore-megaavr":        {"arduino", "megaavr"},
-		"arduino/ArduinoCore-samd":           {"arduino", "samd"},
-		"arduino/ArduinoCore-mbed":           {"arduino", "mbed"},
-		"arduino/ArduinoCore-nRF528x-mbedos": {"arduino", "nrf52840"},
-		"arduino/ArduinoCore-renesas":        {"arduino", "renesas"},
-		"stm32duino/Arduino_Core_STM32":      {"stm32duino", "stm32"},
-		"SpenceKonde/ATTinyCore":             {"ATTinyCore", "avr"},
-		"SpenceKonde/megaTinyCore":           {"megaTinyCore", "megaavr"},
-	}
-	if x, ok := known[fullName]; ok {
-		return x[0], x[1]
-	}
-	parts := strings.SplitN(fullName, "/", 2)
-	owner, repo := parts[0], parts[len(parts)-1]
-	arch := strings.ToLower(repo)
-	for _, prefix := range []string{"arduino-", "arduino_", "arduinocore-", "arduinocore_"} {
-		arch = strings.TrimPrefix(arch, prefix)
-	}
-	arch = strings.TrimSuffix(arch, "_core")
-	arch = strings.TrimSuffix(arch, "-core")
-	if arch == "" {
-		arch = "core"
-	}
-	return strings.ToLower(owner), arch
-}
-
 func (m *Manager) installBoard(repo *Repo, vendor, arch, tag string) error {
 	base := filepath.Join(m.Config.HardwareDir(), vendor)
 	target := filepath.Join(base, arch)
@@ -877,13 +844,6 @@ func (o *minSizeObject) MinSize() fyne.Size {
 		maxFloat32(childMin.Width, o.min.Width),
 		maxFloat32(childMin.Height, o.min.Height),
 	)
-}
-
-func maxFloat32(a, b float32) float32 {
-	if a > b {
-		return a
-	}
-	return b
 }
 
 func (o *minSizeObject) CreateRenderer() fyne.WidgetRenderer {
