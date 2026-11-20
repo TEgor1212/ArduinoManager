@@ -854,17 +854,17 @@ type minSizeObjectRenderer struct {
 	object *minSizeObject
 }
 
-func (r *minSizeObjectRenderer) Layout(size fyne.Size) {
-	r.object.child.Move(fyne.NewPos(0, 0))
+func (r *minSizeObjectRenderer) Layout(size Size) {
+	r.object.child.Move(NewPos(0, 0))
 	r.object.child.Resize(size)
 }
 
-func (r *minSizeObjectRenderer) MinSize(max fyne.Size) fyne.Size {
-	return fyne.NewSize(0, 0)
+func (r *minSizeObjectRenderer) MinSize() Size {
+	return NewSize(0, 0)
 }
 
-func (r *minSizeObjectRenderer) Objects() []fyne.CanvasObject {
-	return []fyne.CanvasObject{r.object.child}
+func (r *minSizeObjectRenderer) Objects() []CanvasObject {
+	return []CanvasObject{r.object.child}
 }
 
 func (r *minSizeObjectRenderer) Refresh() {
