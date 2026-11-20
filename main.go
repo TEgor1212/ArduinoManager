@@ -805,25 +805,6 @@ func (m *Manager) listLibraries(scanAll bool, customPath string) ([]string, erro
 	return libs, nil
 }
 
-func libraryVersion(dir string) string {
-	f, err := os.Open(filepath.Join(dir, "library.properties"))
-	if err != nil {
-		return "IDE 1 only"
-	}
-	defer f.Close()
-	sc := bufio.NewScanner(f)
-	for sc.Scan() {
-		line := strings.TrimSpace(sc.Text())
-		if strings.HasPrefix(line, "version=") {
-			v := strings.TrimSpace(strings.TrimPrefix(line, "version="))
-			if v != "" {
-				return "v" + v
-			}
-		}
-	}
-	return "vunknown"
-}
-
 func (m *Manager) listBoards() []string {
 	root := m.Config.HardwareDir()
 	var result []string
@@ -916,10 +897,6 @@ type minSizeObjectRenderer struct {
 func (r *minSizeObjectRenderer) Layout(size fyne.Size) {
 	r.object.child.Move(fyne.NewPos(0, 0))
 	r.object.child.Resize(size)
-}
-
-func (r *minSizeObjectRenderer) MinSize() fyne.Size {
-	return r.object.MinSize()
 }
 
 func (r *minSizeObjectRenderer) Objects() []fyne.CanvasObject {
