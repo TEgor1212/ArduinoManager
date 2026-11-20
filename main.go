@@ -188,25 +188,6 @@ func detectArduinoData() string {
 	}
 }
 
-func parseKeyValueFile(path, key string) string {
-	f, err := os.Open(path)
-	if err != nil {
-		return ""
-	}
-	defer f.Close()
-	sc := bufio.NewScanner(f)
-	for sc.Scan() {
-		line := strings.TrimSpace(sc.Text())
-		if !strings.HasPrefix(line, key+":") && !strings.HasPrefix(line, key+"=") {
-			continue
-		}
-		v := line[strings.IndexAny(line, ":=")+1:]
-		v = strings.TrimSpace(strings.Trim(v, "\"'"))
-		return v
-	}
-	return ""
-}
-
 func (c Config) LibDir() string      { return filepath.Join(c.Sketchbook, "libraries") }
 func (c Config) HardwareDir() string { return filepath.Join(c.Sketchbook, "hardware") }
 func (c Config) IndexFile() string   { return filepath.Join(c.ArduinoData, "library_index.json") }
