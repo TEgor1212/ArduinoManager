@@ -36,6 +36,8 @@ const (
 	configName = ".arduino-manager.conf"
 )
 
+var version = "dev"
+
 type Repo struct {
 	FullName      string `json:"full_name"`
 	Name          string `json:"name"`
