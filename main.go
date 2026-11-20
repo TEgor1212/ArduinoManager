@@ -266,7 +266,6 @@ func (m *Manager) ghGet(path string, out any) error {
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-
 func isAlphaNum(b byte) bool {
 	return b >= 'a' && b <= 'z' || b >= '0' && b <= '9'
 }
