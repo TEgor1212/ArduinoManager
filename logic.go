@@ -105,10 +105,11 @@ func parseKeyValueFile(path, key string) string {
 	sc := bufio.NewScanner(f)
 	for sc.Scan() {
 		line := strings.TrimSpace(sc.Text())
-		if !strings.HasPrefix(line, key+":") && !strings.HasPrefix(line, key+"=") {
+		if !strings.HasPrefix(line, key+":") && !strings.HasPrefix(line, key+"=") && !strings.HasPrefix(line, key+" :") && !strings.HasPrefix(line, key+" =") {
 			continue
 		}
 		v := line[strings.IndexAny(line, ":=")+1:]
+		v = strings.TrimSpace(v)
 		v = strings.TrimSpace(strings.Trim(v, "\"'"))
 		return v
 	}
