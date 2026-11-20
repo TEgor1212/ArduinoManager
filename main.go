@@ -266,28 +266,6 @@ func (m *Manager) ghGet(path string, out any) error {
 	return json.NewDecoder(resp.Body).Decode(out)
 }
 
-func wordRank(name, query string) int {
-	name = strings.ToLower(name)
-	query = strings.ToLower(query)
-	if query == "" || !strings.Contains(name, query) {
-		return 2
-	}
-	for i := 0; ; {
-		idx := strings.Index(name[i:], query)
-		if idx < 0 {
-			break
-		}
-		idx += i
-		if idx == 0 || !isAlphaNum(name[idx-1]) {
-			return 0
-		}
-		if idx+len(query) >= len(name) {
-			return 1
-		}
-		i = idx + 1
-	}
-	return 1
-}
 
 func isAlphaNum(b byte) bool {
 	return b >= 'a' && b <= 'z' || b >= '0' && b <= '9'
