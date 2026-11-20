@@ -1,0 +1,7 @@
+/arduinomanager
+/arduinomanager-*
+.env
+.idea/
+.vscode/
+*.iml
+go.sum
